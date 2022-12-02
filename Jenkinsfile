@@ -14,7 +14,7 @@ pipeline {
     stage('git Clone') {
       steps {
         echo 'Getting Project from Git'
-        git branch: "main", url: ''
+        git branch: "main", url: 'https://github.com/olasalah73/project-ops.git'
       }
     }
     stage('mvn clean') {
