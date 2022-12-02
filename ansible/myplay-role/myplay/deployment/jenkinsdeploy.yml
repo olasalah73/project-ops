@@ -1,0 +1,43 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+          
+      containers:
+      - name: jenkins
+        image: jenkins/jenkins:lts-jdk11
+        ports: 
+        - containerPort: 8080
+        - containerPort: 50000
+        
+        readinessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /login
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 2
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+status: {}

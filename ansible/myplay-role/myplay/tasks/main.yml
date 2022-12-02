@@ -1,0 +1,25 @@
+- name: "Connect to cluster (update kubeconfig)"
+  shell: "aws eks --region us-east-1 update-kubeconfig --name lolla-eks"
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: jenkins
+    api_version: v1
+    kind: Namespace
+    state: present
+- name: Create a Deployment by reading the definition from a local file
+  kubernetes.core.k8s:
+    state: present
+    src: /home/ubuntu/ansible/myplay-role/myplay/deployment/jenkinsdeploy.yml
+
+
+- name: Create a service2 by reading the definition from a local file
+  kubernetes.core.k8s:
+    state: present
+    src: /home/ubuntu/ansible/myplay-role/myplay/deployment/jenkinsservice.yml
+
+
+- name: Create a service1 by reading the definition from a local file
+  kubernetes.core.k8s:
+    state: present
+    src: /home/ubuntu/ansible/myplay-role/myplay/deployment/cluster-ip-jenkins.yml
+    

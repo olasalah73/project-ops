@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: java
+  name: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: java
+    spec:
+      containers:
+      - image: 54.173.143.147:8082/java:latest
+        name: java

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: java
+  labels:
+    app: java
+spec:
+  containers:
+  - name: java
+    image: 54.173.143.147:8082/java:latest
+    ports:
+    - containerPort: 80
+  imagePullSecrets:
+  - name: regcred
